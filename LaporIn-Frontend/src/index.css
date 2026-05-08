@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* Panah Kiri dan Kanan */
+.slick-prev:before,
+.slick-next:before {
+  color: #4755d1; /* Ganti dengan warna pilihanmu */
+  font-size: 25px; /* Opsional: memperbesar ukuran panah */
+  opacity: 1;      /* Opsional: agar warna tidak terlihat pudar */
+}
+
+/* Warna saat di-hover (opsional) */
+.slick-prev:hover:before,
+.slick-next:hover:before {
+  color: #c70039;
+}
