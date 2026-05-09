@@ -60,7 +60,7 @@ function Homepage() {
 						</div>
 
 					</div>
-					<div className='col-span-4  pb-5'>
+					<div className='col-span-4 pb-5'>
 						<div className='border-b border-gray-400 pb-4 mb-3 flex justify-between items-center'>
 							<h1 className='text-2xl font-bold'>Artikel</h1>
 							<Link to={`/artikel`}>Lihat semua</Link>
