@@ -7,19 +7,18 @@ import ReportCardWrapper from '../components/ReportCardWrapper'
 import Input from '../components/Input'
 import Submit from '../components/Submit.jsx';
 import api from '../axios/axiosInstance.js'
-import useScreenSize from '../hook/useScreenSize.jsx'
+import ArticleCardWrapper from '../components/ArticleCardWrapper.jsx'
+import { useAuth } from '../context/AuthContext.jsx'
 
-function MakeReport() {
-	const navigate = useNavigate();
-	const { width, height, isMobile, isTablet, isDesktop } = useScreenSize();
+function MakeArticle() {
 	const [formData, setFormData] = useState({
-		report_title: "",
-		report_body: "",
-		category: "",
-		long: 112.61449064408748,
-		lat: -7.9542136389446085,
+		article_title: "",
+		article_body: "",
+		category_id: "",
 		images: []
 	});
+
+	const navigate = useNavigate();
 
 	const [categories, setCategories] = useState([]);
 	useEffect(() => {
@@ -31,11 +30,11 @@ function MakeReport() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	function setTitle(value) {
-		setFormData({ ...formData, report_title: value });
+		setFormData({ ...formData, article_title: value });
 	}
 
 	function setBody(value) {
-		setFormData({ ...formData, report_body: value });
+		setFormData({ ...formData, article_body: value });
 	}
 
 	function setFile(value) {
@@ -43,54 +42,53 @@ function MakeReport() {
 	}
 
 	function setCategory(value) {
-		setFormData({ ...formData, category: value });
+		setFormData({ ...formData, category_id: value });
 	}
-
-
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		setIsLoading(true)
-		if (formData.category === "") {
-			return console.log("Kategori harus diisi")
+
+		if (formData.article_title === "" || formData.article_body === "" || formData.category_id === "" || formData.images.length < 1) {
+			return alert("Semua field harus diisi");
 		}
+
+		setIsLoading(true)
 		console.log(formData)
 
 		const payload = new FormData();
-		payload.append('report_title', formData.report_title);
-		payload.append('report_body', formData.report_body);
-		payload.append('long', formData.long);
-		payload.append('lat', formData.lat);
-		payload.append('category', formData.category);
-		
+		payload.append('article_title', formData.article_title);
+		payload.append('article_body', formData.article_body);
+		payload.append('category_id', formData.category_id);
+
 		for (let i of formData.images) {
 			payload.append('images', i);
 		}
 
-		api.post("/report", payload, { headers: { 'Content-Type': 'multipart/form-data' } }).then(() => {
-			alert("Aduan berhasil diajukan");
-			navigate("/");
+		api.post("/article", payload, { headers: { 'Content-Type': 'multipart/form-data' } }).then(() => {
+			alert("Artikel berhasil diposting");
+			navigate("/artikel");
 		}).catch(err => {
 			console.log(err)
 		}).finally(() => {
 			setIsLoading(false);
-		})
+		});
 	}
 
 	return (
 		<div className=''>
 			<div className=''>
 				<div className='border-b border-gray-400 pb-4 mb-3'>
-					<h1 className='text-2xl font-bold'>Buat Aduan</h1>
+					<h1 className='text-2xl font-bold'>Buat Artikel</h1>
 				</div>
-				<div className=''>
-					<form action="" className='max-w-3xl' onSubmit={handleSubmit}>
+				<div className='max-w-2xl'>
+					<form action="" onSubmit={handleSubmit}>
 						<Input
 							label={`Judul`}
-							rows={10}
+							rows={2}
 							className={`mt-5`}
 							value={formData.report_title}
 							setValue={setTitle}
+							type={`textarea`}
 						/>
 						<Input
 							type={`textarea`}
@@ -113,19 +111,6 @@ function MakeReport() {
 							selectAttributeValue={'category_name'}
 							selectProperty={`Pilih kategori`}
 						/>
-
-						<div className='mt-5 w-full'>
-							<div>
-								<label htmlFor="" className='text-[12px]'>Lokasi</label>
-							</div>
-							<div className='w-full h-70'>
-								<MapA markerPos={formData} setMarkerPos={setFormData} />
-							</div>
-							<div className='mt-3 text-[12px]'>
-								<p>Latitude: {formData.lat}</p>
-								<p>Longitude: {formData.long}</p>
-							</div>
-						</div>
 						<Input
 							type={`file`}
 							label={`Foto`}
@@ -134,10 +119,10 @@ function MakeReport() {
 							setValue={setFile}
 						/>
 
-						<Submit variant={`filled`} className={`px-10 mt-5`}>Ajukan</Submit>
+						<Submit variant={`filled`} className={`px-10 mt-5`} value={`Publikasikan`} />
 					</form>
 
-					<ReportCardWrapper count={3} className={`mt-15`} cols={isMobile ? 1 : 3} />
+					<ArticleCardWrapper title={`Artikel lainnya`} count={3} className={`mt-15`} cols={3} />
 
 				</div>
 
@@ -146,4 +131,4 @@ function MakeReport() {
 	)
 }
 
-export default MakeReport
+export default MakeArticle

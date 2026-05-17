@@ -1,22 +1,29 @@
+import React from 'react'
 import { useEffect, useState } from 'react'
+import ArticleCard from '../components/ArticleCard'
+import ReportCard from '../components/ReportCard'
+import Input from '../components/Input'
+import Button from '../components/button/Button'
 import ReportCardWrapper from '../components/ReportCardWrapper'
 import SearchBar from '../components/SearchBar'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import api from '../axios/axiosInstance'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import useScreenSize from '../hook/useScreenSize'
 
-function Report() {
+function OwnedReport() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [totalData, setTotalData] = useState(0);
-  const { width, height, isMobile, isTablet, isDesktop } = useScreenSize();
+  const { isMobile, isTablet, isDesktop } = useScreenSize();
 
   const page = searchParams.get('p');
   const keyword = searchParams.get('s') || "";
   const category = searchParams.get('category') || "all";
-  const statusId = searchParams.get('status_id') || "2";
+  const statusId = searchParams.get('status_id') || "all";
   const sortBy = searchParams.get('sort_by') || "newest";
+
+  const [tick, setTick] = useState(0);
 
   const [searchKeyword, setSearchKeyword] = useState(keyword);
   const [searchCategory, setSearchCategory] = useState(category);
@@ -24,7 +31,6 @@ function Report() {
   const [searchSortBy, setSearchSortBy] = useState(sortBy);
 
   const [currentPage, setCurrentPage] = useState(parseInt(page));
-  
 
   useEffect(() => {
     searchParams.set('s', searchKeyword);
@@ -74,10 +80,7 @@ function Report() {
         <div className=''>
 
           <div className='border-b border-gray-400 pb-4 mb-3'>
-            <h1 className='text-2xl font-bold'>Aduan</h1>
-          </div>
-          <div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, illum? Ipsam ab aliquid quaerat, aspernatur fuga, iure corporis cupiditate repudiandae, quae consequatur iste molestias nobis consequuntur! Cupiditate doloribus aspernatur totam?</p>
+            <h1 className='text-2xl font-bold'>Aduan Saya</h1>
           </div>
 
           <div>
@@ -91,6 +94,7 @@ function Report() {
               setStatus={setSearchStatus}
               sortBy={searchSortBy}
               setSortBy={setSearchSortBy}
+              isSelf="1"
             />
           </div>
 
@@ -105,6 +109,10 @@ function Report() {
               statusId={searchStatus}
               sortBy={searchSortBy}
               withoutTitle={true}
+              isSelf={`1`}
+              showActButton={true}
+              tickProp={tick}
+              setTickProp={setTick}
             />
           </div>
 
@@ -130,4 +138,4 @@ function Report() {
   )
 }
 
-export default Report
+export default OwnedReport
