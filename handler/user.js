@@ -3,7 +3,6 @@ import query from "../db/query.js";
 import path from "path";
 
 import fs from 'fs/promises';
-import { handleDeleteUser, handleGetUser, handlePatchUser } from "../handler/user.js";
 
 export const handleGetUser = async (req, res) => {
     const { id, p = "1", self = "0" } = req.query;
