@@ -1,7 +1,4 @@
-import React from 'react'
-import Button from './button/Button'
-
-function Submit({value, desc, className}) {
+function Submit({value, className}) {
     return (
         <div className='mt-3'>
             <input 

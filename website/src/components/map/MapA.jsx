@@ -1,7 +1,5 @@
-
 import { Map, Marker } from '@vis.gl/react-maplibre';
-import 'maplibre-gl/dist/maplibre-gl.css'; // See notes below
-import { useCallback, useState } from 'react';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 function MapA({ markerPos, setMarkerPos }) {
 

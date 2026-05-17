@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import ReportCardWrapper from '../components/ReportCardWrapper'
-import SearchBar from '../components/SearchBar'
+import ReportCardWrapper from '../components/ReportCardWrapper.jsx'
+import SearchBar from '../components/SearchBar.jsx'
 import { useSearchParams } from 'react-router-dom'
-import api from '../axios/axiosInstance'
+import api from '../axios/axiosInstance.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import useScreenSize from '../hook/useScreenSize'
+import useScreenSize from '../hook/useScreenSize.jsx'
 
 function Report() {
   const [searchParams, setSearchParams] = useSearchParams();

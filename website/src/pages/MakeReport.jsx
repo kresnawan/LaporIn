@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import Button from '../components/button/Button'
-import MapA from '../components/map/MapA'
-import ReportCard from '../components/ReportCard'
-import { Link, useNavigate } from 'react-router-dom'
-import ReportCardWrapper from '../components/ReportCardWrapper'
-import Input from '../components/Input'
+import { useEffect, useState } from 'react'
+import MapA from '../components/map/MapA.jsx'
+import { useNavigate } from 'react-router-dom'
+import ReportCardWrapper from '../components/ReportCardWrapper.jsx'
+import Input from '../components/Input.jsx'
 import Submit from '../components/Submit.jsx';
 import api from '../axios/axiosInstance.js'
 import useScreenSize from '../hook/useScreenSize.jsx'
@@ -13,7 +11,7 @@ import { faX } from '@fortawesome/free-solid-svg-icons'
 
 function MakeReport() {
 	const navigate = useNavigate();
-	const { width, height, isMobile, isTablet, isDesktop } = useScreenSize();
+	const { isMobile } = useScreenSize();
 	const [formData, setFormData] = useState({
 		report_title: "",
 		report_body: "",

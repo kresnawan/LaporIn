@@ -82,6 +82,7 @@ function ReportCardWrapper({
                         reportId={item.report_id}
                         statusId={item.status_id}
                         userVote={item.user_vote}
+                        category={item.category_name}
                         tick={tick}
                         setTick={setTick}
                         showActButton={showActButton}

@@ -1,18 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import ReportCardWrapper from '../components/ReportCardWrapper';
-import api from '../axios/axiosInstance';
+import ReportCardWrapper from '../components/ReportCardWrapper.jsx';
+import api from '../axios/axiosInstance.js';
 import dayjs from 'dayjs';
-import CommentBar from '../components/CommentBar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleDown, faCircleUp } from '@fortawesome/free-regular-svg-icons'
-import { faCircleDown as faCircleDownSolid, faCircleUp as faCircleUpSolid } from '@fortawesome/free-solid-svg-icons'
-import VoteBar from '../components/VoteBar';
-import Button from '../components/button/Button';
-import { useAuth } from '../context/AuthContext';
-import useScreenSize from '../hook/useScreenSize';
-import ImageSlider from './ImageSlider';
-import LoadingAnimation from '../components/LoadingAnimation';
+import CommentBar from '../components/CommentBar.jsx';
+import VoteBar from '../components/VoteBar.jsx';
+import Button from '../components/button/Button.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
+import useScreenSize from '../hook/useScreenSize.jsx';
+import ImageSlider from './ImageSlider.jsx';
+import LoadingAnimation from '../components/LoadingAnimation.jsx';
 
 function ReportItem() {
   const { id } = useParams();
@@ -75,6 +72,9 @@ function ReportItem() {
               <div>
                 <ImageSlider images={reportData.images} content={`report`} />
               </div>
+              <div className='mt-5'>
+                <p>{reportData.report_body}</p>
+              </div>
               <div className='mt-10 grid grid-cols-2 gap-5'>
 
                 <div className='border p-5 text-[12px]'>
@@ -116,13 +116,9 @@ function ReportItem() {
                     <p>Disetujui oleh</p>
                     <p className='text-sm'>{reportData.acceptor || ""}</p>
                   </div>
-
                 </div>
-
               </div>
-              <div className='mt-10'>
-                <p>{reportData.report_body}</p>
-              </div>
+              
               {
                 loading ? (<p>Loading...</p>) : (() => {
                   if (user && user.userId === reportData.author_id) {

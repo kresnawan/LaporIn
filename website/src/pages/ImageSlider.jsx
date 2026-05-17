@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { baseURL } from "../axios/axiosInstance";
+import { baseURL } from "../axios/axiosInstance.js";
 
 function ImageSlider({ images, content }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,7 +27,7 @@ function ImageSlider({ images, content }) {
   };
 
   return (
-    <div className="relative w-full h-100 overflow-hidden bg-gray-100 group">
+    <div className="relative w-full aspect-video overflow-hidden bg-gray-100 group">
       <div
         className="flex h-full transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}

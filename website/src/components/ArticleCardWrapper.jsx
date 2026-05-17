@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import api from '../axios/axiosInstance';
-import ArticleCard from './ArticleCard';
+import { useEffect, useState } from 'react'
+import api from '../axios/axiosInstance.js';
+import ArticleCard from './ArticleCard.jsx';
 import { Link } from 'react-router-dom';
-import { MoonLoader } from "react-spinners";
-import LoadingAnimation from './LoadingAnimation';
+import LoadingAnimation from './LoadingAnimation.jsx';
 
 function ArticleCardWrapper({
   withoutTitle,
@@ -72,6 +71,7 @@ function ArticleCardWrapper({
                     isArchived={item.is_archived}
                     tick={tick}
                     setTick={setTick}
+                    category={item.category_name}
                   />
                 )) : (
                   <p className='text-center text-gray-400'>Artikel tidak ditemukan</p>

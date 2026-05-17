@@ -1,12 +1,8 @@
-import React, { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleDown, faCircleUp } from '@fortawesome/free-regular-svg-icons'
-import { faCircleDown as faCircleDownSolid, faCircleUp as faCircleUpSolid } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
-import api, { baseURL } from '../axios/axiosInstance'
-import VoteBar from './VoteBar'
-import { useAuth } from '../context/AuthContext'
+import api, { baseURL } from '../axios/axiosInstance.js'
+import VoteBar from './VoteBar.jsx'
+import { useAuth } from '../context/AuthContext.jsx'
 
 function StatusSection({ className, text }) {
   return (
@@ -31,6 +27,7 @@ function ReportCard({
   userVote,
   setTick,
   statusId,
+  category,
   showActButton
 }) {
 
@@ -82,7 +79,7 @@ function ReportCard({
 
   return (
     <div className={`text-[12px] ${isInline && `grid grid-cols-2 gap-5`}`}>
-      <div className='bg-gray-300 h-35 overflow-hidden'>
+      <div className='bg-gray-300 aspect-21/9 overflow-hidden'>
         <img src={`${baseURL}/uploads/report/${imageUrl}`} alt="" className='min-h-full min-w-full' />
       </div>
       <div>
@@ -91,7 +88,9 @@ function ReportCard({
         </Link>
         <div className={`${isInline && `flex justify-between items-center mt-4`}`}>
           {/* Upvote & Downvote */}
+          
           <div>
+            <p className='text-[12px] text-gray-500 italic'>{category}</p>
             {
               statusId === 2 && (
                 <VoteBar upvoteCount={upvote} downvoteCount={downvote} tick={tick} setTick={setTick} reportId={reportId} userVote={userVote} />
@@ -135,8 +134,8 @@ function ReportCard({
           loading ? (<p>Loading...</p>) : (
             statusId === 1 && user.userRole === 2 && (
               <div className='flex gap-2 text-white mt-2'>
-                <button className='w-[50%] bg-green-700 py-1' onClick={handleAccept}>Setujui</button>
-                <button className='w-[50%] bg-red-700' onClick={handleReject}>Tolak</button>
+                <button className='w-[50%] bg-green-700 py-2 cursor-pointer' onClick={handleAccept}>Setujui</button>
+                <button className='w-[50%] bg-red-700 py-2 cursor-pointer' onClick={handleReject}>Tolak</button>
               </div>
             )
           )
@@ -151,7 +150,7 @@ function ReportCard({
                     <button className='w-[50%] bg-blue-700 py-2' onClick={handleDone}>Nyatakan selesai</button>
                   )
                 }
-                <button className={`${statusId === 2 ? `w-[50%]` : `w-full`} border border-red-600 text-red-600 py-2`} onClick={handleDeleteReport}>Hapus</button>
+                <button className={`${statusId === 2 ? `w-[50%]` : `w-full`} border border-red-600 text-red-600 py-2 cursor-pointer`} onClick={handleDeleteReport}>Hapus</button>
               </div>
             )
           )

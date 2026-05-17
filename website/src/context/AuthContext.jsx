@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { checkAuth } from '../axios/checkAuth';
+import { checkAuth } from '../axios/checkAuth.js';
 
 const AuthContext = createContext();
 

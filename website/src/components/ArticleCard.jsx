@@ -1,8 +1,7 @@
-import React from 'react'
 import dayjs from 'dayjs'
-import api, { baseURL } from '../axios/axiosInstance'
+import api, { baseURL } from '../axios/axiosInstance.js'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext.jsx'
 
 function ArticleCard({
   isInline,
@@ -15,7 +14,8 @@ function ArticleCard({
   withActButtons,
   setTick,
   tick,
-  isArchived
+  isArchived,
+  category
 }) {
   const { user, loading } = useAuth();
   async function handleArchive() {
@@ -52,32 +52,34 @@ function ArticleCard({
         ${!isLast && `border-b`} border-gray-400 pb-5 mt-5 
         ${isInline && `grid grid-cols-2 gap-5`}
         `}>
-      <div className='h-30 bg-gray-300 overflow-hidden'>
+      <div className='aspect-21/9 bg-gray-300 overflow-hidden'>
         <img src={`${baseURL}/uploads/article/${imageUrl}`} alt="" className='min-w-full min-h-full' />
       </div>
       <div className='mt-3 text-sm'>
         <Link to={`/artikel/${articleId}`}>
-          <p className='uppercase font-bold line-clamp-3'>{title}</p>
+          <p className='line-clamp-3 text-sm mt-2 font-bold uppercase leading-normal h-[4.5em]'>{title}</p>
         </Link>
-        <br /><p>{author} - {dayjs(created_at).format('DD/MM/YY HH:mm')}</p>
+        <p className='text-[12px] text-gray-500 italic'>{category}</p>
+        <p className='text-[12px]'>{author} - {dayjs(created_at).format('DD/MM/YY HH:mm')}</p>
         {
           loading ? (<p>Loading...</p>) : (
-            <div>
+            <div className='mt-5 text-[12px]'>
               {
-                (withActButtons && isArchived === 0 && (user && user.userRole === 2)) && (
-                  <div className='flex gap-2 mt-2'>
-                    <button className='border bg-amber-500 text-white p-1 w-[50%] rounded-sm cursor-pointer' onClick={handleArchive}>Arsipkan</button>
-                    <button className='border-2 rounded-sm border-red-600 text-red-600 p-1 w-[50%] cursor-pointer'>Hapus</button>
-                  </div>
-                )
+                (() => {
+                  if (user && user.userRole === 2) {
+                    if (withActButtons && isArchived === 0) {
+                      return <button className='border border-black text-black p-2 w-full rounded-sm cursor-pointer' onClick={handleArchive}>Arsipkan</button>
+                    } else if (withActButtons && isArchived === 1) {
+                      return <button className='border bg-blue-500 text-white rounded-sm p-2 w-full cursor-pointer' onClick={handleUnarchive}>Keluarkan dari Arsip</button>
+                    } else {
+                      return <></>
+                    }
+                  }
+                })()
               }
+
               {
-                (withActButtons && isArchived === 1 && (user && user.userRole === 2)) && (
-                  <div className='mt-5'>
-                    <button className='border bg-blue-500 text-white rounded-sm p-1 w-full cursor-pointer' onClick={handleUnarchive}>Keluarkan dari Arsip</button>
-                    <button className='border-2 rounded-sm border-red-600 text-red-600 p-1 w-full mt-2 cursor-pointer'>Hapus</button>
-                  </div>
-                )
+                withActButtons && <button className='border rounded-sm border-red-600 text-red-600 p-2 w-full mt-2 cursor-pointer'>Hapus</button>
               }
             </div>
           )

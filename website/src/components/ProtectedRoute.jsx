@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom'
-import { checkAuth } from '../axios/checkAuth';
-import { useAuth } from '../context/AuthContext';
+import { checkAuth } from '../axios/checkAuth.js';
 
 export default function ProtectedRoute({ requiredRole }) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-
-
 
   useEffect(() => {
     checkAuth().then(res => {

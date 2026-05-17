@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import Button from '../components/button/Button'
+import Button from '../components/button/Button.jsx'
 import { Link, useSearchParams } from 'react-router-dom'
-import ArticleCardWrapper from '../components/ArticleCardWrapper'
-import SearchBar from '../components/SearchBar'
-import { useAuth } from '../context/AuthContext'
-import api from '../axios/axiosInstance'
+import ArticleCardWrapper from '../components/ArticleCardWrapper.jsx'
+import SearchBar from '../components/SearchBar.jsx'
+import { useAuth } from '../context/AuthContext.jsx'
+import api from '../axios/axiosInstance.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import useScreenSize from '../hook/useScreenSize'
+import useScreenSize from '../hook/useScreenSize.jsx'
 
 function Article() {
   const { width, height, isMobile, isTablet, isDesktop } = useScreenSize();
@@ -91,7 +91,7 @@ function Article() {
               user && user.userRole === 2 && (
                 <div className='w-full mt-5'>
                   <Link to={`/artikel/buat`}>
-                    <Button variant={`outlined`} className={`w-full`}>Buat artikel</Button>
+                    <Button variant={`filled`} className={`w-full`}>+ Buat artikel</Button>
                   </Link>
                 </div>
               )

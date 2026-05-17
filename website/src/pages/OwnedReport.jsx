@@ -1,16 +1,11 @@
-import React from 'react'
 import { useEffect, useState } from 'react'
-import ArticleCard from '../components/ArticleCard'
-import ReportCard from '../components/ReportCard'
-import Input from '../components/Input'
-import Button from '../components/button/Button'
-import ReportCardWrapper from '../components/ReportCardWrapper'
-import SearchBar from '../components/SearchBar'
-import { Link, useSearchParams } from 'react-router-dom'
-import api from '../axios/axiosInstance'
+import ReportCardWrapper from '../components/ReportCardWrapper.jsx'
+import SearchBar from '../components/SearchBar.jsx'
+import { useSearchParams } from 'react-router-dom'
+import api from '../axios/axiosInstance.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import useScreenSize from '../hook/useScreenSize'
+import useScreenSize from '../hook/useScreenSize.jsx'
 
 function OwnedReport() {
   const [searchParams, setSearchParams] = useSearchParams();

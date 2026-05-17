@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import Input from '../components/Input'
-import Submit from '../components/Submit'
+import { useState } from 'react'
+import Input from '../components/Input.jsx'
+import Submit from '../components/Submit.jsx'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import api from '../axios/axiosInstance';
-import { useAuth } from '../context/AuthContext';
-import Logo from '../components/logo/Logo';
+import api from '../axios/axiosInstance.js';
+import { useAuth } from '../context/AuthContext.jsx';
+import Logo from '../components/logo/Logo.jsx';
 
 function Register() {
 	const [firstName, setFirstName] = useState("");

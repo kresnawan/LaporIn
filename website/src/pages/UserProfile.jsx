@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import Button from '../components/button/Button'
-import api from '../axios/axiosInstance';
+import { useEffect, useState } from 'react'
+import Button from '../components/button/Button.jsx'
+import api from '../axios/axiosInstance.js';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import LoadingAnimation from '../components/LoadingAnimation';
+import { useAuth } from '../context/AuthContext.jsx';
+import LoadingAnimation from '../components/LoadingAnimation.jsx';
 
 function UserProfile() {
   const {loading, user} = useAuth();
@@ -129,9 +129,9 @@ function UserProfile() {
                     )
                   }
 
-                  <div className='mt-3'>
+                  {/* <div className='mt-3'>
                     <Button variant={`outlined`}>Ubah password</Button>
-                  </div>
+                  </div> */}
                   <div className='mt-3'>
                     <Button onClick={handleLogout} variant={`outlined`}>Logout</Button>
                   </div>

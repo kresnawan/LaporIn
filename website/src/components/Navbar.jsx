@@ -1,12 +1,12 @@
 import { Link, useLocation } from "react-router-dom"
-import Button from "./button/Button"
-import { useAuth } from "../context/AuthContext"
+import Button from "./button/Button.jsx"
+import { useAuth } from "../context/AuthContext.jsx"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
-import Logo from "./logo/Logo";
-import TopBar from "./TopBar";
+import Logo from "./logo/Logo.jsx";
+import TopBar from "./TopBar.jsx";
 import { useEffect, useState } from "react";
-import useScreenSize from "../hook/useScreenSize";
+import useScreenSize from "../hook/useScreenSize.jsx";
 
 function ProfileIcon({ bgColor, iconColor }) {
   return (

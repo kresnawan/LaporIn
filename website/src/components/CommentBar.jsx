@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import Input from './Input'
-import Button from './button/Button'
-import api from '../axios/axiosInstance';
-import { useAuth } from '../context/AuthContext';
+import React, { useEffect, useState } from 'react'
+import Input from './Input.jsx'
+import Button from './button/Button.jsx'
+import api from '../axios/axiosInstance.js';
+import { useAuth } from '../context/AuthContext.jsx';
 import dayjs from 'dayjs';
 
 function CommentItem({ item, content, tick, setTick, isLoading, setIsLoading }) {

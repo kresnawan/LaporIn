@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Button from './button/Button'
+import Button from './button/Button.jsx'
 import api from "../axios/axiosInstance.js";
 import { useAuth } from '../context/AuthContext.jsx';
 import useScreenSize from '../hook/useScreenSize.jsx';

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import ArticleCardWrapper from '../components/ArticleCardWrapper'
+import ArticleCardWrapper from '../components/ArticleCardWrapper.jsx'
 import { useParams } from 'react-router-dom';
-import CommentBar from '../components/CommentBar';
-import api from '../axios/axiosInstance';
+import CommentBar from '../components/CommentBar.jsx';
+import api from '../axios/axiosInstance.js';
 import dayjs from 'dayjs';
-import useScreenSize from '../hook/useScreenSize';
-import ImageSlider from './ImageSlider';
+import useScreenSize from '../hook/useScreenSize.jsx';
+import ImageSlider from './ImageSlider.jsx';
 
 function ArticleItem() {
   const { id } = useParams();

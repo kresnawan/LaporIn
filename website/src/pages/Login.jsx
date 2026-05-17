@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import Button from '../components/button/Button'
-import Input from '../components/Input'
-import Submit from '../components/Submit'
+import { useEffect, useState } from 'react'
+import Input from '../components/Input.jsx'
+import Submit from '../components/Submit.jsx'
 import { Link } from 'react-router-dom'
-import api, { baseURL } from '../axios/axiosInstance'
+import { baseURL } from '../axios/axiosInstance.js'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import Logo from '../components/logo/Logo'
+import Logo from '../components/logo/Logo.jsx'
 
 function Login() {
 	const [email, setEmail] = useState("");
