@@ -10,8 +10,10 @@ function Parent() {
         <Navbar />
       </div>
 
-      <div className='min-h-full p-5 max-w-4xl'>
-        <Outlet />
+      <div className='flex justify-center'>
+        <div className='min-h-screen px-3 py-8 max-w-5xl w-full'>
+          <Outlet />
+        </div>
       </div>
 
       <div>

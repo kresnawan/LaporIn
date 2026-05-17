@@ -1,5 +1,5 @@
 import './App.css'
-import { Route, BrowserRouter, Routes } from 'react-router-dom'
+import { Route, BrowserRouter, Routes, useLocation } from 'react-router-dom'
 import Parent from './Parent.jsx'
 
 import Report from './pages/Report.jsx'
@@ -10,6 +10,12 @@ import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import MakeReport from './pages/MakeReport.jsx'
 import ReportItem from './pages/ReportItem.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
+import { useEffect } from 'react'
+import { useAuth } from './context/AuthContext.jsx'
+import ArticleItem from './pages/ArticleItem.jsx'
+import MakeArticle from './pages/MakeArticle.jsx'
+import OwnedReport from './pages/OwnedReport.jsx'
 
 function App() {
 
@@ -25,10 +31,21 @@ function App() {
             <Route path='' element={<Homepage />} />
 
             <Route path='aduan' element={<Report />} />
-            <Route path='aduan/buat' element={<MakeReport />} />
-            <Route path='aduan/:id' element={<ReportItem />} />
+            
+            <Route element={<ProtectedRoute />}>
+              <Route path='aduan/buat' element={<MakeReport />} />
+              <Route path='edit-profil' element={<UserProfile />} />
+              <Route path='aduan/saya' element={<OwnedReport />} />
+            </Route>
 
-            <Route path='edit-profil' element={<UserProfile />} />
+            <Route element={<ProtectedRoute requiredRole={2} />}>
+              <Route path='artikel/buat' element={<MakeArticle />} />
+            </Route>
+
+            <Route path='aduan/:id' element={<ReportItem />} />
+            <Route path='artikel/:id' element={<ArticleItem />} />
+
+            
 
             <Route path='artikel' element={<Article />} />
 
