@@ -117,6 +117,37 @@ export const handleGetReport = async (req, res) => {
 	}
 }
 
+export const handleGetReportLength = async (req, res) => {
+    const { k = "", category = "", status_id = "" } = req.query;
+
+    try {
+        let sql = `
+            SELECT 
+                COUNT(r.report_id) AS count
+            FROM report r
+            WHERE LOWER(r.report_title) LIKE ?
+        `;
+
+        let queryArgs = [`%${k.toLowerCase()}%`];
+
+        if (category !== "all") {
+            sql += ` AND r.category_id = ?`;
+            queryArgs.push(category);
+        }
+        if (status_id !== "all") {
+            sql += ` AND r.status_id = ?`;
+            queryArgs.push(status_id);
+        }
+
+        const results = await query(sql, queryArgs);
+        return res.send(results.results);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(error);
+    }
+}
+
 export const handleGetReportSelf = async (req, res) => {
 	const {
 		k = "",
@@ -188,35 +219,44 @@ export const handleGetReportSelf = async (req, res) => {
 	}
 }
 
-export const handleGetReportLength = async (req, res) => {
-    const { k = "", category = "", status_id = "" } = req.query;
+export const handleGetReportSelfLength = async (req, res) => {
+	const {
+		k = "",
+		p = "1",
+		category = "all",
+		sort_by = "newest",
+		status_id = "all"
+	} = req.query;
 
-    try {
-        let sql = `
+	try {
+		let sql = `
             SELECT 
-                COUNT(r.report_id) AS count
+				COUNT(r.report_id) AS count
             FROM report r
             WHERE LOWER(r.report_title) LIKE ?
         `;
 
-        let queryArgs = [`%${k.toLowerCase()}%`];
+		let queryArgs = [`%${k.toLowerCase()}%`];
 
-        if (category !== "all") {
-            sql += ` AND r.category_id = ?`;
-            queryArgs.push(category);
-        }
-        if (status_id !== "all") {
-            sql += ` AND r.status_id = ?`;
-            queryArgs.push(status_id);
-        }
+		if (category !== "all") {
+			sql += ` AND r.category_id = ?`;
+			queryArgs.push(category);
+		}
+		if (status_id !== "all") {
+			sql += ` AND r.status_id = ?`;
+			queryArgs.push(status_id);
+		}
 
-        const results = await query(sql, queryArgs);
-        return res.send(results.results);
+		sql += ` AND r.author_id = ?`;
+		queryArgs.push(req.userId);
 
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send(error);
-    }
+		const results = await query(sql, queryArgs);
+		return res.send(results.results);
+
+	} catch (error) {
+		console.error(error);
+		return res.status(500).send(error);
+	}
 }
 
 export const handlePostReport = async (req, res) => {

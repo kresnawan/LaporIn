@@ -1,6 +1,5 @@
 import express from "express";
 import "dotenv/config";
-import query from "../db/query.js";
 import multer from "multer";
 import path from "path";
 
@@ -15,23 +14,20 @@ const storage = multer.diskStorage({
 	}
 });
 
-const knexInstance = knex({ client: 'mysql' });
-
 const upload = multer({ storage: storage })
 
-import fs from 'fs/promises';
 import { authenticateToken } from "../middleware/authentication.js";
-import { pool } from "../db/connection-pool.js";
-import knex from "knex";
-import { handleDeleteReport, handleGetReport, handleGetReportLength, handleGetReportSelf, handlePatchReport, handlePostReport } from "../handler/report.js";
+import { handleDeleteReport, handleGetReport, handleGetReportLength, handleGetReportSelf, handleGetReportSelfLength, handlePatchReport, handlePostReport } from "../handler/report.js";
 
 const reportRoute = express.Router();
 
 reportRoute.get("/", authenticateToken(false), handleGetReport);
 
+reportRoute.get("/length", authenticateToken(false), handleGetReportLength);
+
 reportRoute.get("/self", authenticateToken(true), handleGetReportSelf);
 
-reportRoute.get("/length", authenticateToken(false), handleGetReportLength);
+reportRoute.get("/self/length", authenticateToken(true), handleGetReportSelfLength);
 
 reportRoute.post("/", authenticateToken(true), upload.array('images', 5), handlePostReport);
 
