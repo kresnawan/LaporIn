@@ -8,6 +8,7 @@ import userRoute from './routes/user.js';
 import path from 'path';
 import categoryRoute from './routes/category.js';
 import { authenticateToken } from './middleware/authentication.js';
+import statRoute from './routes/stat.js';
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.use('/auth', authRoute);
 router.use('/report', reportRoute);
 router.use('/category', categoryRoute);
 router.use('/user', userRoute);
+router.use('/stat', statRoute);
 
 router.get('/ping', authenticateToken(true), (req, res) => {
     res.status(200).send();

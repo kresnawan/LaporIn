@@ -58,7 +58,8 @@ export const handleGetReport = async (req, res) => {
             	r.report_title, 
 				r.report_body, 
 				r.latitude, 
-				r.longitude, 
+				r.longitude,
+                c.category_name, 
 				r.upvote, 
 				r.downvote,
 				${req.userId ? ` rv.vote_type AS user_vote,` : ``}
@@ -67,6 +68,7 @@ export const handleGetReport = async (req, res) => {
 				r.created_at
             FROM report r
             INNER JOIN user u ON u.user_id = r.author_id
+            INNER JOIN category c ON r.category_id = c.category_id
             INNER JOIN (
                 SELECT report_id, image_url, ROW_NUMBER() OVER (PARTITION BY report_id) as rn
                 FROM report_image
@@ -166,7 +168,8 @@ export const handleGetReportSelf = async (req, res) => {
             	r.report_title, 
 				r.report_body, 
 				r.latitude, 
-				r.longitude, 
+				r.longitude,
+                c.category_name,
 				r.upvote, 
 				r.downvote,
                 rv.vote_type AS user_vote,
@@ -175,6 +178,7 @@ export const handleGetReportSelf = async (req, res) => {
                 r.created_at
             FROM report r
             INNER JOIN user u ON u.user_id = r.author_id
+            INNER JOIN category c ON r.category_id = c.category_id
             INNER JOIN (
                 SELECT report_id, image_url, ROW_NUMBER() OVER (PARTITION BY report_id) as rn
                 FROM report_image

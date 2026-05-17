@@ -50,10 +50,12 @@ export const handleGetArticle = async (req, res) => {
         let sql = `
             SELECT 
 				a.*,
+                c.category_name,
 				CONCAT(u.first_name, ' ', u.last_name) AS author_name,
             	img.image_url
             FROM article a
             INNER JOIN user u ON u.user_id = a.author_id
+            INNER JOIN category c ON c.category_id = a.category_id
             INNER JOIN (
                 SELECT article_id, image_url, ROW_NUMBER() OVER (PARTITION BY article_id) as an
                 FROM article_image
