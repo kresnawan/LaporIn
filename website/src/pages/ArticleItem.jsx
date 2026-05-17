@@ -5,6 +5,7 @@ import CommentBar from '../components/CommentBar';
 import api from '../axios/axiosInstance';
 import dayjs from 'dayjs';
 import useScreenSize from '../hook/useScreenSize';
+import ImageSlider from './ImageSlider';
 
 function ArticleItem() {
   const { id } = useParams();
@@ -30,7 +31,7 @@ function ArticleItem() {
             <h1 className='text-2xl font-bold'>{articleData.article_title}</h1>
           </div>
           <div>
-            {/* <ReportItemImageSlider /> */}
+            <ImageSlider images={articleData.images} content={`article`} />
           </div>
           <div className='mt-3 text-[12px]'>
             <p>oleh {articleData.author_name} - {dayjs(articleData.created_at).format('DD/MM/YYYY HH:mm')}</p>

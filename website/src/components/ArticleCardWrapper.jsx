@@ -22,7 +22,7 @@ function ArticleCardWrapper({
   withActButtons
 }) {
   const [articleData, setArticleData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const colMap = {
     1: 'grid-cols-1',
@@ -34,7 +34,6 @@ function ArticleCardWrapper({
   };
 
   useEffect(() => {
-    setIsLoading(true);
     api.get(`/article?k=${keyword}&sort_by=${sortBy}&p=${page}&category=${category}&is_archived=${isArchived}`).then(res => {
       setArticleData(res);
     }).catch(err => {

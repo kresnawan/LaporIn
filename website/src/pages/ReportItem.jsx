@@ -11,7 +11,7 @@ import VoteBar from '../components/VoteBar';
 import Button from '../components/button/Button';
 import { useAuth } from '../context/AuthContext';
 import useScreenSize from '../hook/useScreenSize';
-import ReportItemImageSlider from './ReportItemImageSlider';
+import ImageSlider from './ImageSlider';
 import LoadingAnimation from '../components/LoadingAnimation';
 
 function ReportItem() {
@@ -73,7 +73,7 @@ function ReportItem() {
                 <h1 className='text-2xl font-bold'>{reportData.report_title}</h1>
               </div>
               <div>
-                <ReportItemImageSlider images={reportData.images} />
+                <ImageSlider images={reportData.images} content={`report`} />
               </div>
               <div className='mt-10 grid grid-cols-2 gap-5'>
 

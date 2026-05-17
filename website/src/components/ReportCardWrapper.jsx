@@ -22,7 +22,7 @@ function ReportCardWrapper({
   setTickProp
 }) {
   const [reportData, setReportData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [tick, setTick] = useState(0);
   const colMap = {
     1: 'grid-cols-1',
@@ -34,7 +34,6 @@ function ReportCardWrapper({
   };
 
   useEffect(() => {
-    setIsLoading(true);
     let activePage;
     if (page === null || page === undefined || !page) {
       activePage = 1;

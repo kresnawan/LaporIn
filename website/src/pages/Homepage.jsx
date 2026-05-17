@@ -51,7 +51,7 @@ function Homepage() {
 								<h1 className='text-2xl font-bold'>Siapa kami?</h1>
 							</div>
 							<div>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, illum? Ipsam ab aliquid quaerat, aspernatur fuga, iure corporis cupiditate repudiandae, quae consequatur iste molestias nobis consequuntur! Cupiditate doloribus aspernatur totam?</p>
+								<p>LaporIn adalah aplikasi berbasis web inovatif yang dirancang khusus sebagai wadah pengaduan dan penyaluran aspirasi bagi seluruh masyarakat Kota Malang dalam melaporkan berbagai permasalahan kota—mulai dari kerusakan infrastruktur, fasilitas umum, hingga kendala pelayanan publik—secara praktis dan real-time. Mengusung pilar transparansi dan efisiensi, platform ini bertindak sebagai jembatan digital yang menghubungkan langsung warga Bumi Arema dengan pemerintah daerah, memastikan setiap aduan dapat terdokumentasi secara valid, dilacak status perkembangannya secara terbuka, serta ditangani dengan lebih cepat demi mewujudkan Kota Malang yang lebih responsif, tertib, dan nyaman untuk semua.</p>
 							</div>
 						</div>
 

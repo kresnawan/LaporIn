@@ -8,6 +8,8 @@ import Input from '../components/Input'
 import Submit from '../components/Submit.jsx';
 import api from '../axios/axiosInstance.js'
 import useScreenSize from '../hook/useScreenSize.jsx'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faX } from '@fortawesome/free-solid-svg-icons'
 
 function MakeReport() {
 	const navigate = useNavigate();
@@ -20,6 +22,8 @@ function MakeReport() {
 		lat: -7.9542136389446085,
 		images: []
 	});
+
+	const [previewURL, setPreviewURL] = useState([]);
 
 	const [categories, setCategories] = useState([]);
 	useEffect(() => {
@@ -46,6 +50,20 @@ function MakeReport() {
 		setFormData({ ...formData, category: value });
 	}
 
+	useEffect(() => {
+		if (!formData.images || formData.images.length === 0) {
+			setPreviewURL([]);
+			return;
+		}
+
+		const urls = formData.images.map((file) => ({ name: file.name, image_url: URL.createObjectURL(file) }));
+		setPreviewURL(urls);
+
+		return () => {
+			urls.forEach((url) => URL.revokeObjectURL(url));
+		};
+	}, [formData.images]);
+
 
 
 	function handleSubmit(e) {
@@ -62,10 +80,12 @@ function MakeReport() {
 		payload.append('long', formData.long);
 		payload.append('lat', formData.lat);
 		payload.append('category', formData.category);
-		
+
 		for (let i of formData.images) {
 			payload.append('images', i);
 		}
+
+
 
 		api.post("/report", payload, { headers: { 'Content-Type': 'multipart/form-data' } }).then(() => {
 			alert("Aduan berhasil diajukan");
@@ -75,6 +95,12 @@ function MakeReport() {
 		}).finally(() => {
 			setIsLoading(false);
 		})
+	}
+
+	function deleteFile(indexToDelete) {
+		const updatedImages = formData.images.filter((_, index) => index !== indexToDelete);
+
+		setFormData({ ...formData, images: updatedImages });
 	}
 
 	return (
@@ -126,15 +152,49 @@ function MakeReport() {
 								<p>Longitude: {formData.long}</p>
 							</div>
 						</div>
-						<Input
-							type={`file`}
-							label={`Foto`}
-							className={`mt-5`}
-							multiple={true}
-							setValue={setFile}
-						/>
+						<div>
+							<Input
+								type={`file`}
+								label={`Foto`}
+								className={`mt-5`}
+								multiple={true}
+								setValue={setFile}
+							/>
+						</div>
+						<div className='flex flex-wrap gap-2.5 mt-5 w-full'>
+							{
+								previewURL.map((item, index) => (
+									<div
+										key={index}
+										className='flex items-center gap-2.5  border border-gray-400'
+									>
+										<div className='w-15 h-10 overflow-hidden shrink-0 bg-gray-200 border border-gray-200'>
+											<img
+												src={item.image_url}
+												alt={item.name}
+												className='w-full h-full object-cover'
+											/>
+										</div>
+										<div className='flex flex-col justify-center'>
+											<p className='text-xs font-medium max-w-30 sm:max-w-45 truncate text-gray-800'>
+												{item.name}
+											</p>
+										</div>
 
-						<Submit variant={`filled`} className={`px-10 mt-5`}>Ajukan</Submit>
+										<button
+											type="button"
+											onClick={() => deleteFile(index)}
+											className='w-5 h-5 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none cursor-pointer'
+											title="Hapus foto"
+										>
+											<FontAwesomeIcon icon={faX} className="text-[12px]" />
+										</button>
+									</div>
+								))
+							}
+						</div>
+
+						<Submit variant={`filled`} className={`px-10 mt-5 w-full`}>Ajukan</Submit>
 					</form>
 
 					<ReportCardWrapper count={3} className={`mt-15`} cols={isMobile ? 1 : 3} />

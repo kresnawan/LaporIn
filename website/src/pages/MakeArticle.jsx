@@ -9,6 +9,8 @@ import Submit from '../components/Submit.jsx';
 import api from '../axios/axiosInstance.js'
 import ArticleCardWrapper from '../components/ArticleCardWrapper.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faX } from '@fortawesome/free-solid-svg-icons'
 
 function MakeArticle() {
 	const [formData, setFormData] = useState({
@@ -19,6 +21,12 @@ function MakeArticle() {
 	});
 
 	const navigate = useNavigate();
+	const [previewURL, setPreviewURL] = useState([]);
+	function deleteFile(indexToDelete) {
+		const updatedImages = formData.images.filter((_, index) => index !== indexToDelete);
+
+		setFormData({ ...formData, images: updatedImages });
+	}
 
 	const [categories, setCategories] = useState([]);
 	useEffect(() => {
@@ -52,6 +60,8 @@ function MakeArticle() {
 			return alert("Semua field harus diisi");
 		}
 
+
+
 		setIsLoading(true)
 		console.log(formData)
 
@@ -73,6 +83,20 @@ function MakeArticle() {
 			setIsLoading(false);
 		});
 	}
+
+	useEffect(() => {
+		if (!formData.images || formData.images.length === 0) {
+			setPreviewURL([]);
+			return;
+		}
+
+		const urls = formData.images.map((file) => ({ name: file.name, image_url: URL.createObjectURL(file) }));
+		setPreviewURL(urls);
+
+		return () => {
+			urls.forEach((url) => URL.revokeObjectURL(url));
+		};
+	}, [formData.images]);
 
 	return (
 		<div className=''>
@@ -118,6 +142,38 @@ function MakeArticle() {
 							multiple={true}
 							setValue={setFile}
 						/>
+						<div className='flex flex-wrap gap-2.5 mt-10 w-full'>
+							{
+								previewURL.map((item, index) => (
+									<div
+										key={index}
+										className='flex items-center gap-2.5  border border-gray-400'
+									>
+										<div className='w-15 h-10 overflow-hidden shrink-0 bg-gray-200 border border-gray-200'>
+											<img
+												src={item.image_url}
+												alt={item.name}
+												className='w-full h-full object-cover'
+											/>
+										</div>
+										<div className='flex flex-col justify-center'>
+											<p className='text-xs font-medium max-w-30 sm:max-w-45 truncate text-gray-800'>
+												{item.name}
+											</p>
+										</div>
+
+										<button
+											type="button"
+											onClick={() => deleteFile(index)}
+											className='w-5 h-5 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none cursor-pointer'
+											title="Hapus foto"
+										>
+											<FontAwesomeIcon icon={faX} className="text-[12px]" />
+										</button>
+									</div>
+								))
+							}
+						</div>
 
 						<Submit variant={`filled`} className={`px-10 mt-5`} value={`Publikasikan`} />
 					</form>

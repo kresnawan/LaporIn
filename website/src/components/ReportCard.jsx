@@ -81,78 +81,84 @@ function ReportCard({
   }
 
   return (
-      <div className={`text-[12px] ${isInline && `grid grid-cols-2 gap-5`}`}>
-        <div className='bg-gray-300 h-35 overflow-hidden'>
-          <img src={`${baseURL}/uploads/report/${imageUrl}`} alt="" className='min-h-full min-w-full' />
-        </div>
-        <div>
-          <Link to={`/aduan/${reportId}`}>
-            <p className='line-clamp-3 text-sm mt-2 font-bold uppercase leading-normal h-[4.5em]'>{title}</p>
-          </Link>
-          <div className={`${isInline && `flex justify-between items-center mt-4`}`}>
-            {/* Upvote & Downvote */}
-            <VoteBar upvoteCount={upvote} downvoteCount={downvote} tick={tick} setTick={setTick} reportId={reportId} userVote={userVote} />
-
-            <div className={`${!isInline && `flex justify-between mt-2`} text-right`}>
-              <p>{author}</p>
-              <div>
-                <p>{dayjs(createdAt).format('DD/MM/YY HH:mm')}</p>
-                <div className='text-right'>
-                  {(() => {
-                    switch (statusId) {
-                      case 1:
-                        return (
-                          <StatusSection className={`bg-amber-300`} text={`Menunggu Verifikasi`} />
-                        );
-                      case 2:
-                        return (
-                          <StatusSection className={`bg-green-500`} text={`Disetujui`} />
-                        );
-                      case 3:
-                        return (
-                          <StatusSection className={`bg-red-400`} text={`Ditolak`} />
-                        );
-                      case 4:
-                        return (
-                          <StatusSection className={`bg-blue-400`} text={`Selesai`} />
-                        );
-                      default:
-                        return ``;
-                    }
-                  })()}
-                </div>
-              </div>
-
-            </div>
-          </div>
-          {
-            loading ? (<p>Loading...</p>) : (
-              statusId === 1 && user.userRole === 2 && (
-                <div className='flex gap-2 text-white mt-2'>
-                  <button className='w-[50%] bg-green-700 py-1' onClick={handleAccept}>Setujui</button>
-                  <button className='w-[50%] bg-red-700' onClick={handleReject}>Tolak</button>
-                </div>
-              )
-            )
-          }
-
-          {
-            loading ? (<p>Loading...</p>) : (
-              ((user && authorId === user.userId) && showActButton) && (
-                <div className='flex gap-2 text-white mt-2'>
-                  {
-                    statusId === 2 && (
-                      <button className='w-[50%] bg-blue-700 py-2' onClick={handleDone}>Nyatakan selesai</button>
-                    )
-                  }
-                  <button className={`${statusId === 2 ? `w-[50%]` : `w-full`} border border-red-600 text-red-600 py-2`} onClick={handleDeleteReport}>Hapus</button>
-                </div>
-              )
-            )
-          }
-        </div>
-
+    <div className={`text-[12px] ${isInline && `grid grid-cols-2 gap-5`}`}>
+      <div className='bg-gray-300 h-35 overflow-hidden'>
+        <img src={`${baseURL}/uploads/report/${imageUrl}`} alt="" className='min-h-full min-w-full' />
       </div>
+      <div>
+        <Link to={`/aduan/${reportId}`}>
+          <p className='line-clamp-3 text-sm mt-2 font-bold uppercase leading-normal h-[4.5em]'>{title}</p>
+        </Link>
+        <div className={`${isInline && `flex justify-between items-center mt-4`}`}>
+          {/* Upvote & Downvote */}
+          <div>
+            {
+              statusId === 2 && (
+                <VoteBar upvoteCount={upvote} downvoteCount={downvote} tick={tick} setTick={setTick} reportId={reportId} userVote={userVote} />
+              )
+            }
+          </div>
+
+          <div className={`${!isInline && `flex justify-between mt-2`} text-right`}>
+            <p>{author}</p>
+            <div>
+              <p>{dayjs(createdAt).format('DD/MM/YY HH:mm')}</p>
+              <div className='text-right'>
+                {(() => {
+                  switch (statusId) {
+                    case 1:
+                      return (
+                        <StatusSection className={`bg-amber-300`} text={`Menunggu Verifikasi`} />
+                      );
+                    case 2:
+                      return (
+                        <StatusSection className={`bg-green-500`} text={`Disetujui`} />
+                      );
+                    case 3:
+                      return (
+                        <StatusSection className={`bg-red-400`} text={`Ditolak`} />
+                      );
+                    case 4:
+                      return (
+                        <StatusSection className={`bg-blue-400`} text={`Selesai`} />
+                      );
+                    default:
+                      return ``;
+                  }
+                })()}
+              </div>
+            </div>
+
+          </div>
+        </div>
+        {
+          loading ? (<p>Loading...</p>) : (
+            statusId === 1 && user.userRole === 2 && (
+              <div className='flex gap-2 text-white mt-2'>
+                <button className='w-[50%] bg-green-700 py-1' onClick={handleAccept}>Setujui</button>
+                <button className='w-[50%] bg-red-700' onClick={handleReject}>Tolak</button>
+              </div>
+            )
+          )
+        }
+
+        {
+          loading ? (<p>Loading...</p>) : (
+            ((user && authorId === user.userId) && showActButton) && (
+              <div className='flex gap-2 text-white mt-2'>
+                {
+                  statusId === 2 && (
+                    <button className='w-[50%] bg-blue-700 py-2' onClick={handleDone}>Nyatakan selesai</button>
+                  )
+                }
+                <button className={`${statusId === 2 ? `w-[50%]` : `w-full`} border border-red-600 text-red-600 py-2`} onClick={handleDeleteReport}>Hapus</button>
+              </div>
+            )
+          )
+        }
+      </div>
+
+    </div>
   )
 }
 

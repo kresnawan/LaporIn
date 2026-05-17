@@ -17,7 +17,7 @@ function Input({
 }) {
   return (
     <div className={`w-full ${className}`}>
-      <label htmlFor="" className='text-[12px]'>{label} <span className='text-red-600'>{isMandatory && `*`}</span></label>
+      <p className='text-[12px]'>{label} <span className='text-red-600'>{isMandatory && `*`}</span></p>
       <div>
         {
           (() => {
@@ -48,6 +48,22 @@ function Input({
                     ))
                   }
                 </select>
+              )
+            } else if (type === "file") {
+              return (
+                <div className='mt-3'>
+                  <label htmlFor="input" className='py-3 px-5 border'>+ Tambah foto</label>
+                  <input
+                    value={value}
+                    onChange={e => setValue(e.target.files)}
+                    type={type}
+                    placeholder={placeholder}
+                    name=""
+                    id="input"
+                    multiple={multiple}
+                    className={`border p-2 text-sm w-full hidden`}
+                  />
+                </div>
               )
             } else {
               return (

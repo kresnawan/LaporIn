@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { baseURL } from "../axios/axiosInstance";
 
-export default function ReportItemImageSlider({ images }) {
+function ImageSlider({ images, content }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!images || images.length === 0) {
@@ -35,7 +35,7 @@ export default function ReportItemImageSlider({ images }) {
         {images.map((item, index) => (
           <div key={index} className="w-full h-full shrink-0">
             <img
-              src={`${baseURL}/uploads/report/${item.image_url}`}
+              src={`${baseURL}/uploads/${content}/${item.image_url}`}
               alt={`Aduan-${index}`}
               className="w-full h-full object-cover"
             />
@@ -79,3 +79,5 @@ export default function ReportItemImageSlider({ images }) {
     </div>
   );
 }
+
+export default ImageSlider;

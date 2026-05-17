@@ -51,7 +51,7 @@ function OwnedReport() {
   }, []);
 
   useEffect(() => {
-    api.get(`/report/length?k=${searchKeyword}&category=${searchCategory}&status_id=${searchStatus}`).then(res => {
+    api.get(`/report/self/length?k=${searchKeyword}&category=${searchCategory}&status_id=${searchStatus}`).then(res => {
       if (res[0]) {
         setTotalData(Math.ceil(res[0].count / 8));
       }
