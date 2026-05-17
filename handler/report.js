@@ -169,17 +169,21 @@ export const handleGetReportSelf = async (req, res) => {
 				r.longitude, 
 				r.upvote, 
 				r.downvote,
-            	img.image_url, r.status_id, r.created_at
+                rv.vote_type AS user_vote,
+            	img.image_url, 
+                r.status_id, 
+                r.created_at
             FROM report r
             INNER JOIN user u ON u.user_id = r.author_id
             INNER JOIN (
                 SELECT report_id, image_url, ROW_NUMBER() OVER (PARTITION BY report_id) as rn
                 FROM report_image
             ) img ON r.report_id = img.report_id
+            LEFT JOIN report_vote rv ON r.report_id = rv.report_id AND rv.user_id = ?
             WHERE img.rn = 1 AND LOWER(r.report_title) LIKE ?
         `;
 
-		let queryArgs = [`%${k.toLowerCase()}%`];
+		let queryArgs = [req.userId, `%${k.toLowerCase()}%`];
 
 		if (category !== "all") {
 			sql += ` AND r.category_id = ?`;
