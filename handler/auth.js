@@ -45,7 +45,7 @@ export const handleLogin = (req, res) => {
           },
           accessTokenKey,
           {
-            expiresIn: 60 * 15,
+            expiresIn: 15,
           }
         );
 
@@ -68,7 +68,7 @@ export const handleLogin = (req, res) => {
           domain: "localhost",
           expires: cookieExpires,
         });
-        return res.send(accessToken);
+        return res.send({token: accessToken, user_id: data.user_id, user_role: data.role_id});
       });
     })
     .catch((err) => {
@@ -137,12 +137,12 @@ export const handleRenewToken = (req, res) => {
 
   if (!refreshToken)
     return res
-      .status(401)
+      .status(403)
       .send("Refresh token tidak ditemukan");
 
   jwt.verify(refreshToken, refreshTokenKey, (err, results) => {
     if (err)
-      return res.status(401).send("Refresh token tidak valid");
+      return res.status(403).send("Refresh token tidak valid");
 
     var accessToken = jwt.sign(
       {
@@ -152,10 +152,10 @@ export const handleRenewToken = (req, res) => {
       },
       accessTokenKey,
       {
-        expiresIn: 60 * 15,
+        expiresIn: 10,
       }
     );
 
-    return res.send(accessToken);
+    return res.send({token: accessToken, user_id: results.userId, user_role: results.userRole});
   });
 }
