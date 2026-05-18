@@ -9,6 +9,7 @@ import { useAuth } from '../context/AuthContext.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Logo from '../components/logo/Logo.jsx'
+import LoadingAnimation from '../components/LoadingAnimation.jsx';
 
 function Login() {
 	const [email, setEmail] = useState("");
@@ -28,7 +29,7 @@ function Login() {
 			login({ userId: res.data.user_id, userRole: res.data.user_role }, res.data.token);
 			navigate("/")
 		}).catch(err => {
-			alert(err.response.data);
+			alert(err.response.data ? err.response.data : `Terjadi error`);
 		}).finally(() => {
 			setIsLoading(false);
 		})
@@ -68,13 +69,19 @@ function Login() {
 						isMandatory={true}
 					/>
 
-					<Submit value={`Login`} className={`mt-5 w-full`} desc={`Belum punya akun? Register`} />
-					<div className='text-[12px] mt-3 text-center'>
-						Belum punya akun?
-						<Link to={`/register`}>
-							<span className='font-bold text-[#4a7ce7] hover:underline'> Registrasi</span>
-						</Link>
-					</div>
+					{
+						isLoading ? (<div className='mt-10'><LoadingAnimation /></div>) : (
+							<div>
+								<Submit value={`Login`} className={`mt-5 w-full cursor-pointer`} />
+								<div className='text-[12px] mt-3 text-center'>
+									Belum punya akun?
+									<Link to={`/register`}>
+										<span className='font-bold text-[#4a7ce7] hover:underline'> Registrasi</span>
+									</Link>
+								</div>
+							</div>
+						)
+					}
 				</form>
 			</div>
 		</div>

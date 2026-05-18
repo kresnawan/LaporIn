@@ -46,6 +46,20 @@ function ArticleCard({
     }
   }
 
+  async function handleDelete() {
+    try {
+      let confirmed = window.confirm("Apakah anda yakin akan menghapus artikel ini?")
+      if (confirmed) {
+        await api.delete(`/article?id=${articleId}`);
+        alert("Artikel berhasil dihapus");
+        setTick(tick + 1);
+      }
+    } catch (error) {
+      alert("Terjadi error");
+      console.error(error);
+    }
+  }
+
   return (
 
     <div className={`
@@ -79,7 +93,7 @@ function ArticleCard({
               }
 
               {
-                withActButtons && <button className='border rounded-sm border-red-600 text-red-600 p-2 w-full mt-2 cursor-pointer'>Hapus</button>
+                withActButtons && <button onClick={handleDelete} className='border rounded-sm border-red-600 text-red-600 p-2 w-full mt-2 cursor-pointer'>Hapus</button>
               }
             </div>
           )

@@ -14,7 +14,7 @@ function Input({
   selectProperty
 }) {
   return (
-    <div className={`w-full ${className}`}>
+    <div className={`w-full mt-3 ${className}`}>
       <p className='text-[12px]'>{label} <span className='text-red-600'>{isMandatory && `*`}</span></p>
       <div>
         {

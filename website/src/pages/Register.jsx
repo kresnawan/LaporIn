@@ -7,6 +7,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import api from '../axios/axiosInstance.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import Logo from '../components/logo/Logo.jsx';
+import LoadingAnimation from '../components/LoadingAnimation.jsx';
 
 function Register() {
 	const [firstName, setFirstName] = useState("");
@@ -15,6 +16,7 @@ function Register() {
 	const [password, setPassword] = useState("");
 	const [repeatPassword, setRepeatPassword] = useState("");
 	const [isAdmin, setIsAdmin] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const { user, loading } = useAuth();
 
@@ -22,6 +24,7 @@ function Register() {
 
 	async function submitRegister(e) {
 		e.preventDefault();
+
 		if (firstName === "" || email === "" || password === "" || repeatPassword === "") {
 			return alert("Semua bagian formulir harus diisi");
 		}
@@ -31,11 +34,14 @@ function Register() {
 		}
 
 		try {
+			setIsLoading(true)
 			await api.post(`/auth/register`, { first_name: firstName, last_name: lastName, email: email, password: password, is_admin: isAdmin });
 			alert("Registrasi berhasil");
 			navigate("/login");
 		} catch (error) {
 			alert("Terjadi error");
+		} finally {
+			setIsLoading(false)
 		}
 	}
 
@@ -101,13 +107,19 @@ function Register() {
 						)
 					}
 
-					<Submit value={`Registrasi`} className={`mt-5 w-full`} desc={`Belum punya akun? Register`} />
-					<div className='text-[12px] mt-3 text-center'>
-						Sudah punya akun?
-						<Link to={`/login`}>
-							<span className='font-bold text-[#4a7ce7] hover:underline'> Login</span>
-						</Link>
-					</div>
+					{
+						isLoading ? (<div className='mt-10'><LoadingAnimation /></div>) : (
+							<div>
+								<Submit value={`Registrasi`} className={`mt-5 w-full cursor-pointer`} desc={`Belum punya akun? Register`} />
+								<div className='text-[12px] mt-3 text-center'>
+									Sudah punya akun?
+									<Link to={`/login`}>
+										<span className='font-bold text-[#4a7ce7] hover:underline'> Login</span>
+									</Link>
+								</div>
+							</div>
+						)
+					}
 				</form>
 			</div>
 		</div>

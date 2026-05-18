@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseURL = "http://localhost:4000";
+export const baseURL = "https://api-laporin.kresnawan.com";
 let isRefreshing = false;
 let failedQueue = [];
 

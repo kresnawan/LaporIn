@@ -6,6 +6,7 @@ import api from '../axios/axiosInstance.js'
 import ArticleCardWrapper from '../components/ArticleCardWrapper.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
+import LoadingAnimation from '../components/LoadingAnimation.jsx';
 
 function MakeArticle() {
 	const [formData, setFormData] = useState({
@@ -55,8 +56,6 @@ function MakeArticle() {
 			return alert("Semua field harus diisi");
 		}
 
-
-
 		setIsLoading(true)
 		console.log(formData)
 
@@ -73,7 +72,7 @@ function MakeArticle() {
 			alert("Artikel berhasil diposting");
 			navigate("/artikel");
 		}).catch(err => {
-			console.log(err)
+			alert("Terjadi error");
 		}).finally(() => {
 			setIsLoading(false);
 		});
@@ -170,7 +169,11 @@ function MakeArticle() {
 							}
 						</div>
 
-						<Submit variant={`filled`} className={`px-10 mt-5`} value={`Publikasikan`} />
+						{
+							isLoading ? (<div className='mt-10'><LoadingAnimation /></div>) : (
+								<Submit variant={`filled`} className={`px-10 mt-5 cursor-pointer`} value={`Publikasikan`} />
+							)
+						}
 					</form>
 
 					<ArticleCardWrapper title={`Artikel lainnya`} count={3} className={`mt-15`} cols={3} />

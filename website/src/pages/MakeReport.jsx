@@ -8,6 +8,7 @@ import api from '../axios/axiosInstance.js'
 import useScreenSize from '../hook/useScreenSize.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
+import LoadingAnimation from '../components/LoadingAnimation.jsx'
 
 function MakeReport() {
 	const navigate = useNavigate();
@@ -90,6 +91,7 @@ function MakeReport() {
 			navigate("/");
 		}).catch(err => {
 			console.log(err)
+			alert("Terjadi error");
 		}).finally(() => {
 			setIsLoading(false);
 		})
@@ -192,7 +194,11 @@ function MakeReport() {
 							}
 						</div>
 
-						<Submit variant={`filled`} className={`px-10 mt-5 w-full`}>Ajukan</Submit>
+						{
+							isLoading ? (<div className='mt-10'><LoadingAnimation /></div>) : (
+								<Submit variant={`filled`} className={`px-10 mt-5 w-full cursor-pointer`}>Ajukan</Submit>
+							)
+						}
 					</form>
 
 					<ReportCardWrapper count={3} className={`mt-15`} cols={isMobile ? 1 : 3} />
