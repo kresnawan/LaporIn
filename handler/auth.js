@@ -27,14 +27,11 @@ export const handleLogin = (req, res) => {
 		`, [email])
     .then((resultQuery) => {
       const results = resultQuery.results;
-
-      // Username tidak ditemukan
       if (!results[0]) return res.status(404).send("Email tidak ditemukan");
 
       const data = results[0];
       bcrypt.compare(password, data.password, (err, hash) => {
         if (err) return res.send(err);
-        // Password salah
         if (!hash) return res.status(401).send("Password salah");
 
         var accessToken = jwt.sign(
